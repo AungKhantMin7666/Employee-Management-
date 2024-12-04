@@ -2,14 +2,15 @@ from flask import Flask
 from dotenv import load_dotenv
 from routes.routes import api
 import os
+from flask_cors import CORS
 
-# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 
-# Register file upload routes
 app.register_blueprint(api, url_prefix="/api")
+
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route("/", methods=["GET"])
 def home():
