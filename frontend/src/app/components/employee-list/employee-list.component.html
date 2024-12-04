@@ -1,0 +1,72 @@
+<nav class="navbar navbar-dark">
+    <div class="container-fluid">
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="text"
+          [(ngModel)]="searchTerm"
+          name="searchTerm"
+          placeholder="Search"
+          aria-label="Search"
+          style="margin-left: 50px"
+        />
+        <button class="btn btn-dark" (click)="searchEmployees()">Search</button>
+        <button class="btn btn-dark" (click)="onRowClick('')">New</button>
+        <input
+          type="file"
+          (change)="importFile($event)"
+          accept=".xlsx, .xls"
+          #fileInput
+          style="display: none"
+        />
+        <button class="btn btn-dark" (click)="fileInput.click()">Import</button>
+        <button class="btn btn-dark" (click)="exportFile()">Export</button>
+      </form>
+    </div>
+  </nav>
+  
+  <div class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Date of Birth</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Skill</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let employee of employees
+              | paginate : { itemsPerPage: 10, currentPage: currentPage };
+            let i = index
+          "
+          (click)="onRowClick(employee)"
+        >
+          <td>{{ employee.employee_id }}</td>
+          <td>{{ employee.employee_name }}</td>
+          <td>{{ employee.gender ? employee.gender : "No data" }}</td>
+          <td>
+            {{ employee.date_of_birth ? employee.date_of_birth : "No data" }}
+          </td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.phone ? employee.phone : "No data" }}</td>
+          <td>{{ employee.address ? employee.address : "No data" }}</td>
+          <td>{{ employee.skill ? employee.skill : "No data" }}</td>
+          <td>{{ employee.department ? employee.department : "No data" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <pagination-controls
+    (pageChange)="currentPage = $event"
+    [autoHide]="true"
+  ></pagination-controls>
+  

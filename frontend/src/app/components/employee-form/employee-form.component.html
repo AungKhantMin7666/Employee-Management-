@@ -1,0 +1,269 @@
+<div class="container">
+    <h2 class="text-center" style="margin-bottom: 50px">Employee Form</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="employeeForm">
+      <div class="d-flex mb-3">
+        <label for="employee_name" class="mb-3">Name</label>
+        <div class="valid">
+          <input
+            type="text"
+            formControlName="employee_name"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                employeeForm.get('employee_name')?.invalid &&
+                employeeForm.get('employee_name')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              employeeForm.get('employee_name')?.invalid &&
+              employeeForm.get('employee_name')?.touched &&
+              !employeeForm.get('employee_name')?.hasError('nameExists')
+            "
+            class="invalid-feedback"
+          >
+            Name is required.
+          </div>
+          <div *ngIf="employeeForm.get('employee_name')?.hasError('nameExists')" class="invalid-feedback">
+            Employee name already exists.
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="image">Image</label>
+        <div (click)="fileInput.click()" style="cursor: pointer">
+          <img
+            [src]="previewImg || 'assets/placeholder.webp'"
+            alt="assets/placeholder.webp"
+            width="150"
+            name="image"
+          />
+        </div>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          #fileInput
+          style="display: none"
+        />
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="employee_id" class="mb-3">ID</label>
+        <div class="valid">
+          <input
+            type="text"
+            formControlName="employee_id"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                employeeForm.get('employee_id')?.invalid &&
+                employeeForm.get('employee_id')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              employeeForm.get('employee_id')?.invalid &&
+              employeeForm.get('employee_id')?.touched &&
+              !employeeForm.get('employee_id')?.hasError('idExists')
+            "
+            class="invalid-feedback"
+          >
+            Valid ID is required.
+          </div>
+          <div *ngIf="employeeForm.get('employee_id')?.hasError('idExists')" class="invalid-feedback">
+            Employee ID already exists.
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="date_of_birth" class="mb-3">Date of Birth</label>
+        <div class="valid">
+          <input
+            type="date"
+            formControlName="date_of_birth"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                employeeForm.get('date_of_birth')?.invalid &&
+                employeeForm.get('date_of_birth')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              employeeForm.get('date_of_birth')?.invalid &&
+              employeeForm.get('date_of_birth')?.touched
+            "
+            class="invalid-feedback"
+          >
+            Date of birth is required.
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="category">Gender</label>
+        <div class="valid">
+          <div class="radioStyle">
+            <label class="d-flex radio">
+              <input type="radio" formControlName="gender" value="Male" class="input"/>
+              Male
+            </label>
+            <label class="d-flex radio">
+              <input type="radio" formControlName="gender" value="Female" class="input"/>
+              Female
+            </label>
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="email" class="mb-3">Email</label>
+        <div class="valid">
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                employeeForm.get('email')?.invalid &&
+                employeeForm.get('email')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              employeeForm.get('email')?.invalid &&
+              employeeForm.get('email')?.touched &&
+              !employeeForm.get('email')?.hasError('emailExists')
+            "
+            class="invalid-feedback"
+          >
+            A valid email is required.
+          </div>
+          <div *ngIf="employeeForm.get('email')?.hasError('emailExists')" class="invalid-feedback">
+            Email already exists.
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="phone" class="mb-3">Phone</label>
+        <div class="valid">
+          <input
+            type="text"
+            formControlName="phone"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                employeeForm.get('phone')?.invalid &&
+                employeeForm.get('phone')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              employeeForm.get('phone')?.invalid &&
+              employeeForm.get('phone')?.touched
+            "
+            class="invalid-feedback"
+          >
+            A valid phone number is required.
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="address" class="mb-3">Address</label>
+        <div class="valid">
+          <input type="text" formControlName="address" class="form-control" />
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3" formArrayName="skill">
+        <label for="skill">Skill</label>
+        <div class="valid">
+          <div class="d-flex">
+            <div
+              *ngFor="let skill of skillsArray.controls; let i = index"
+              class="form-check"
+            >
+              <input
+                type="checkbox"
+                [formControlName]="i"
+                class="form-check-input"
+                (change)="onSkillChange(skills[i].name, skillsArray.at(i).value)"
+              />
+              <label class="form-check-label">{{ skills[i].name }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3">
+        <label for="department">Department</label>
+        <div class="valid">
+          <select formControlName="department" class="form-control">
+            <option value="" disabled selected>Select department</option>
+            <option value="HR">HR</option>
+            <option value="Admin">Admin</option>
+            <option value="IT">IT</option>
+          </select>
+        </div>
+      </div>
+  
+      <div formArrayName="education_backgrounds">
+        <button type="button" class="btn btn-dark mt-3" (click)="addInputGroup()">
+          Add Education
+        </button>
+  
+        <div
+          *ngFor="let inputGroup of educationBackgrounds.controls; let i = index"
+          [formGroupName]="i"
+          class="d-flex mb-3"
+        >
+          <input
+            type="text"
+            formControlName="diploma"
+            class="form-control mt-2 me-2"
+            placeholder="Diploma"
+          />
+          <input
+            type="text"
+            formControlName="university_name"
+            class="form-control mt-2 me-2"
+            placeholder="University Name"
+          />
+          <input
+            type="text"
+            formControlName="year"
+            class="form-control mt-2 me-2"
+            placeholder="Year"
+          />
+          <button
+            type="button"
+            (click)="deleteInputGroup(i)"
+            class="btn btn-danger mt-2"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+  
+      <div class="d-flex mb-3 justify-content-start" >
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="employeeForm.invalid"
+        >
+          {{ isEditing ? "Update" : "Save" }}
+        </button>
+        <button type="button" class="btn btn-outline-dark" (click)="cancel()">
+          Cancel
+        </button>
+        <div *ngIf="isEditing">
+          <button (click)="onDelete()" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
