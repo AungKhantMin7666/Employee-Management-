@@ -21,8 +21,13 @@
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",
-      "dom"
-    ]
+      "dom",
+      "dom.iterable"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@env/*": ["src/environments/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

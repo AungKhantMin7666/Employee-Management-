@@ -1,0 +1,83 @@
+.btn {
+    margin: 5px;
+  }
+  
+  .container {
+    background-color: #dcdcdcf3;
+    padding: 50px;
+    max-height: 100%;
+    border-radius: 8px;
+    width: 100%;
+  }
+  
+  .form-check {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  label {
+    font-size: 17px;
+    color: #000000;
+    width: 130px;
+  }
+  
+  input,
+  select,
+  option {
+    outline: none;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    color: #000000;
+    background-color: #f4f4f6;
+  }
+  
+  .radioStyle {
+    width: 100%;
+    background-color: #f4f4f6;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: self-start;
+  }
+  
+  img {
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .radio{
+    margin-right: 50px;
+  }
+  
+  .valid{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .radioStyle label{
+    width: auto;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+  .input{
+    margin-right: 10px;
+  }
+  
+  .form-check-input{
+    width: 15px;
+    margin-right: 10px;
+  }
+  
+  .form-check-label{
+    width: 75px;
+  }
+  
+  .justify-content-start{
+    margin-top: 30px;
+  }
