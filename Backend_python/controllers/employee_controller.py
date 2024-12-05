@@ -1,10 +1,8 @@
-from flask import Flask, Blueprint, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
-import psycopg2
 from db import get_db_connection
-from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 
@@ -20,9 +18,10 @@ def allowed_file(filename):
 def get_img(image_name):
     
     if(image_name):
-        return send_from_directory(UPLOAD_FOLDER, image_name)
-    
-    return jsonify({"error": "File not found"}), 404
+        try:
+            return send_from_directory(UPLOAD_FOLDER, image_name)
+        except:
+            return jsonify({"error": "File not found"}), 404
 
 def format_date(date):
     try:
@@ -231,8 +230,6 @@ def create_new_employee():
     skill = request.form.getlist('skill[]')
     date_of_birth = request.form.get('date_of_birth')
     date = None if date_of_birth in ["null", "", None] else date_of_birth
-    
-    print(request.form)
     
     try:
         validate_unique_employee(employee_id, email)
