@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeeFormComponent {
   selectedFile: File | null = null;
-  previewImg = 'assets/placeholder.webp';
+  previewImg = '/assets/placeholder.webp';
   employee: any;
 
   employeeForm!: FormGroup;
@@ -71,7 +71,7 @@ export class EmployeeFormComponent {
   }
 
   populateForm(data: any) {
-    if (data.image == 'assets/placeholder.webp') {
+    if (data.image == '/assets/placeholder.webp') {
       data.image = null;
     }
     this.employeeForm.patchValue({
@@ -235,7 +235,7 @@ export class EmployeeFormComponent {
     });
 
     if (this.selectedFile) {
-      formData.append('image_file', this.selectedFile, this.selectedFile.name);
+      formData.append('file', this.selectedFile, this.selectedFile.name);
     }
 
     if (this.isEditing) {
@@ -265,14 +265,6 @@ export class EmployeeFormComponent {
             this.employeeForm
               .get('email')
               ?.setErrors({ emailExists: 'Email already exists' });
-          }
-          if (
-            error.status === 409 &&
-            error.error.message === 'Employee name already exists.'
-          ) {
-            this.employeeForm
-              .get('employee_name')
-              ?.setErrors({ nameExists: 'Employee name already exists' });
           }
           if (
             error.status === 409 &&
